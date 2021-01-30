@@ -12,23 +12,23 @@ module Ckeditor
       end
 
       def js_replace(dom_id, options = nil)
-        replace = if options && !options.keys.empty?
-                    js_options = ActiveSupport::JSON.encode(options)
-                    "CKEDITOR.replace('#{dom_id}', #{js_options});"
-                  else
-                    "CKEDITOR.replace('#{dom_id}');"
-                  end
+        # TODO
+        # replace = if options && !options.keys.empty?
+        #   js_options = ActiveSupport::JSON.encode(options)
+        #   "CKEDITOR.replace('#{dom_id}', #{js_options});"
+        # else
+        #   "CKEDITOR.replace('#{dom_id}');"
+        # end
 
-        js_init_ckeditor(dom_id, replace)
+        # js_init_ckeditor(dom_id, replace)
+        js_init_ckeditor(dom_id, nil)
       end
 
       def js_init_ckeditor(dom_id, replace)
-        %((function() {
-            if (typeof CKEDITOR != 'undefined') {
-              if (CKEDITOR.instances['#{dom_id}']) { CKEDITOR.instances['#{dom_id}'].destroy(); }
-              #{replace}
-            }
-          })();)
+        %(ClassicEditor.create(document.querySelector('##{dom_id}'), {
+            simpleUpload: { uploadUrl: '/ckeditor/pictures' },
+          });
+        )
       end
 
       def js_fileuploader(uploader_type, options = {})

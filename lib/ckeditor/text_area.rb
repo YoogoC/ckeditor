@@ -17,7 +17,6 @@ module Ckeditor
       @template = template
       @options = options.stringify_keys
       @ck_options = (@options.delete('ckeditor') || {}).stringify_keys
-      @ck_options['customConfig'] ||= template.asset_path(Ckeditor.js_config_url) if Ckeditor.cdn_enabled?
     end
 
     def render_instance_tag(object_name, method)
